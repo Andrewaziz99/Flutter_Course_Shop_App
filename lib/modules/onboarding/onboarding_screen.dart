@@ -3,6 +3,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:souqy/models/onboarding_model.dart';
 import 'package:souqy/modules/login/login_screen.dart';
 import 'package:souqy/shared/components/components.dart';
+import 'package:souqy/shared/network/local/cache_helper.dart';
 import 'package:souqy/shared/styles/colors.dart';
 
 class onBoardingScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class onBoardingScreen extends StatefulWidget {
 }
 
 class _onBoardingScreenState extends State<onBoardingScreen> {
+
   var boardController = PageController();
   bool isLast = false;
 
@@ -31,6 +33,14 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
       body: 'On Boarding 3 Body',
     ),
   ];
+
+  void submit(){
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if(value) {
+        navigateAndFinish(context, ShopLoginScreen());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +76,7 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
             Row(
               children: [
                 TextButton(
-                  onPressed: () {
-                    navigateAndFinish(context, ShopLoginScreen());
-                  },
+                  onPressed: submit,
                   child: Text('SKIP',
                       style: TextStyle(
                         fontSize: 16.0,
@@ -93,7 +101,7 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast) {
-                      navigateAndFinish(context, ShopLoginScreen());
+                      submit();
                     } else {
                       boardController.nextPage(
                         duration: const Duration(
