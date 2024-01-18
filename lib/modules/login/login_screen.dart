@@ -10,7 +10,6 @@ import 'package:souqy/modules/register/register_screen.dart';
 import 'package:souqy/shared/components/components.dart';
 import 'package:souqy/shared/network/local/cache_helper.dart';
 import 'package:souqy/shared/styles/colors.dart';
-import 'package:toast/toast.dart';
 
 class ShopLoginScreen extends StatelessWidget {
   var emailController = TextEditingController();
