@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:souqy/models/login_model.dart';
@@ -10,6 +9,8 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
   ShopLoginCubit() : super(ShopLoginInitialState());
 
   static ShopLoginCubit get(context) => BlocProvider.of(context);
+
+  int currentIndex = 0;
 
   ShopLoginModel? loginModel;
 
@@ -43,7 +44,6 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ShopLoginChangePasswordVisibilityState());
   }
-
 
 
 }
