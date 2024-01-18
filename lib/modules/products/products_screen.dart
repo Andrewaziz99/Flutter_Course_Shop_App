@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,18 +14,39 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
-        listener: (context, state) {},
+        listener: (context, state)
+        {
+          if (state is ShopSuccessChangeFavouritesState)
+          {
+            if (!state.model.status!)
+            {
+
+              CherryToast.error(
+                toastDuration: const Duration(seconds: 3),
+                toastPosition: Position.bottom,
+                title: Text('Error'),
+                enableIconAnimation: true,
+                description: Text(state.model.message!),
+              ).show(context);
+
+              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              //     content: Center(child: Text(state.model.message!)),
+              //     backgroundColor: Colors.red,
+              //   ),);
+            }
+          }
+        },
         builder: (context, state) {
           return ConditionalBuilder(
               condition: ShopCubit.get(context).homeModel != null && ShopCubit.get(context).categoriesModel != null,
               builder: (context) =>
-                  builderWidget(ShopCubit.get(context).homeModel!, ShopCubit.get(context).categoriesModel!),
+                  builderWidget(ShopCubit.get(context).homeModel!, ShopCubit.get(context).categoriesModel!, context),
               fallback: (context) =>
                   const Center(child: CircularProgressIndicator()));
         });
   }
 
-  Widget builderWidget(HomeModel model, CategoriesModel catModel) => SingleChildScrollView(
+  Widget builderWidget(HomeModel model, CategoriesModel catModel, context) => SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +130,7 @@ class ProductsScreen extends StatelessWidget {
                 childAspectRatio: 1 / 1.58,
                 children: List.generate(
                   model.data!.products.length,
-                  (index) => buildGridProduct(model.data!.products[index]),
+                  (index) => buildGridProduct(model.data!.products[index], context),
                 ),
               ),
             ),
@@ -126,6 +149,9 @@ class ProductsScreen extends StatelessWidget {
           ),
           Container(
             color: Colors.black.withOpacity(0.8),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 5.0,
+            ),
             width: 100.0,
             child: Text(
               '${model.name}',
@@ -142,7 +168,7 @@ class ProductsScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildGridProduct(ProductModel product) => Container(
+  Widget buildGridProduct(ProductModel product, context) => Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,11 +238,17 @@ class ProductsScreen extends StatelessWidget {
                         ),
                       const Spacer(),
                       IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border,
-                          size: 14.0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            ShopCubit.get(context).changeFavourites(product.id!);
+                          },
+                          icon: CircleAvatar(
+                            radius: 14.0,
+                            backgroundColor: ShopCubit.get(context).favourites[product.id]! ? DefaultColor : Colors.grey[300],
+                            child: const Icon(
+                            Icons.favorite_border,
+                            size: 14.0,
+                          ),
                         ),
                       ),
                     ],
