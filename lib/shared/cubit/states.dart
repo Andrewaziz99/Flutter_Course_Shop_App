@@ -1,3 +1,5 @@
+import 'package:souqy/models/change_favorite_model.dart';
+
 abstract class ShopStates {}
 
 class ShopInitialState extends ShopStates {}
@@ -18,5 +20,20 @@ class ShopSuccessCategoriesState extends ShopStates {}
 
 class ShopErrorCategoriesState extends ShopStates {}
 
+class ShopChangeFavouritesState extends ShopStates {}
+
+class ShopSuccessChangeFavouritesState extends ShopStates {
+  final ChangeFavoriteModel model;
+
+  ShopSuccessChangeFavouritesState(this.model);
+}
+
+class ShopErrorChangeFavouritesState extends ShopStates {}
+
+class ShopLoadingGetFavouritesState extends ShopStates {}
+
+class ShopSuccessGetFavouritesState extends ShopStates {}
+
+class ShopErrorGetFavouritesState extends ShopStates {}
 
 
