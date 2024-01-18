@@ -8,10 +8,6 @@ class DioHelper {
       BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
-        headers: {
-          'lang': 'ar',
-          'Content-Type': 'application/json',
-        },
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
       ),
@@ -20,8 +16,8 @@ class DioHelper {
 
   static Future<Response> getData({
     required String url,
-    required Map<String, dynamic> query,
-    String lang = 'ar',
+    Map<String, dynamic>? query,
+    String lang = 'en',
     String? token,
   }) async
   {
@@ -38,7 +34,7 @@ class DioHelper {
     required String url,
     required Map<String, dynamic> data,
     Map<String, dynamic>? query,
-    String lang = 'ar',
+    String lang = 'en',
     String? token,
   }) async
   {
