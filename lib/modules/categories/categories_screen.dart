@@ -12,7 +12,6 @@ class CategoriesScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return ListView.separated(
-            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => buildCatItem(
                 ShopCubit.get(context).categoriesModel!.data!.data[index]),
             separatorBuilder: (context, index) => myDivider(),
