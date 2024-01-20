@@ -207,3 +207,39 @@ Widget defaultFormField({
 // );
 
 
+buildSettingItem(
+{
+      required IconData icon,
+      required String text,
+      required Function function,
+    }) =>
+    InkWell(
+      onTap: () {
+        function();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 30.0,
+            ),
+            const SizedBox(
+              width: 20.0,
+            ),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.arrow_forward_ios,
+            ),
+          ],
+        ),
+      ),
+    );
