@@ -1,4 +1,5 @@
 import 'package:souqy/models/change_favorite_model.dart';
+import 'package:souqy/models/login_model.dart';
 
 abstract class ShopStates {}
 
@@ -41,5 +42,15 @@ class ShopLoadingUserDataState extends ShopStates {}
 class ShopSuccessUserDataState extends ShopStates {}
 
 class ShopErrorUserDataState extends ShopStates {}
+
+class ShopLoadingUpdateUserState extends ShopStates {}
+
+class ShopSuccessUpdateUserState extends ShopStates {
+  final ShopLoginModel model;
+
+  ShopSuccessUpdateUserState(this.model);
+}
+
+class ShopErrorUpdateUserState extends ShopStates {}
 
 
