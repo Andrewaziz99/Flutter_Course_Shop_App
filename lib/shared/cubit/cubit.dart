@@ -5,6 +5,7 @@ import 'package:souqy/models/categories_model.dart';
 import 'package:souqy/models/change_favorite_model.dart';
 import 'package:souqy/models/favorite_model.dart';
 import 'package:souqy/models/home_model.dart';
+import 'package:souqy/models/login_model.dart';
 import 'package:souqy/modules/categories/categories_screen.dart';
 import 'package:souqy/modules/favourite/favourite_screen.dart';
 import 'package:souqy/modules/products/products_screen.dart';
@@ -112,11 +113,28 @@ class ShopCubit extends Cubit<ShopStates> {
       token: TOKEN,
     ).then((value) {
       favoriteModel = FavoriteModel.fromJson(value.data);
-      printFullText(value.data.toString());
       emit(ShopSuccessGetFavouritesState());
     }).catchError((error) {
       print(error.toString());
       emit(ShopErrorGetFavouritesState());
+    });
+  }
+
+  ShopLoginModel? userDataModel;
+
+  void getUserData() {
+    emit(ShopLoadingUserDataState());
+
+    DioHelper.getData(
+      url: PROFILE,
+      token: TOKEN,
+    ).then((value) {
+      userDataModel = ShopLoginModel.fromJson(value.data);
+      printFullText(userDataModel!.data!.name!);
+      emit(ShopSuccessUserDataState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorUserDataState());
     });
   }
 
