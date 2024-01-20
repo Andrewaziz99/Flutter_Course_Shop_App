@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:souqy/models/categories_model.dart';
@@ -76,7 +77,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   ChangeFavoriteModel? changeFavoriteModel;
 
-  void changeFavourites(int productId) {
+  void changeFavourites(int productId, context) {
 
     favourites[productId] = !favourites[productId]!;
     emit(ShopChangeFavouritesState());
@@ -94,6 +95,13 @@ class ShopCubit extends Cubit<ShopStates> {
       }else {
         getFavourites();
       }
+
+      CherryToast.success(
+        toastDuration: const Duration(seconds: 3),
+        title: const Text('Success'),
+        enableIconAnimation: true,
+        description: Text(changeFavoriteModel!.message!),
+      ).show(context);
 
       emit(ShopSuccessChangeFavouritesState(changeFavoriteModel!));
     }).catchError((error) {
