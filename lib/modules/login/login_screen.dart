@@ -8,6 +8,7 @@ import 'package:souqy/modules/login/cubit/cubit.dart';
 import 'package:souqy/modules/login/cubit/states.dart';
 import 'package:souqy/modules/register/register_screen.dart';
 import 'package:souqy/shared/components/components.dart';
+import 'package:souqy/shared/components/constants.dart';
 import 'package:souqy/shared/network/local/cache_helper.dart';
 import 'package:souqy/shared/styles/colors.dart';
 
@@ -29,6 +30,7 @@ class ShopLoginScreen extends StatelessWidget {
               print(state.loginModel.data!.token);
 
               CacheHelper.saveData(key: 'token', value: state.loginModel.data!.token).then((value) {
+                TOKEN = state.loginModel.data!.token!;
                 navigateAndFinish(context, ShopLayout());
               });
             } else {
