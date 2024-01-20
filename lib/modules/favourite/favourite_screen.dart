@@ -104,7 +104,7 @@ class FavouriteScreen extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             ShopCubit.get(context)
-                                .changeFavourites(model.product!.id!);
+                                .changeFavourites(model.product!.id!, context);
                           },
                           icon: CircleAvatar(
                             radius: 14.0,
